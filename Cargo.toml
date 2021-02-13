@@ -1,0 +1,21 @@
+[package]
+name = "picarto_vod_downloader"
+version = "0.1.0"
+authors = ["Siv <mcsibsart@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1.0.123", features = ["derive"] }
+serde_json = "1.0.62"
+clap = "2.33.3"
+reqwest = { version = "0.11.0", features = ["blocking"] }
+scraper = "0.12.0"
+m3u8-rs = "1.0.7"
+url = "2.2.0"
+rayon = "1.5.0"
+mktemp = "0.4.1"
+indicatif = "0.15.0"
+walkdir = "2.3.1"
+rand = "0.8.3"
