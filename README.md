@@ -5,7 +5,7 @@ This is a basic downloader made for downloading Picarto VODs. It is meant to be 
 This program is extremely messy with code sitting in only the main fuction. I intended for this software to originally be a small and basic program, but after working on it, it's clear that there was a lot more I wanted to add. Because of this, I'm going to be updating and arranging the code a little better. The first steps being more readable and managable code.
 
 ## Requirements
-***This program is under developement and expects a lot from the user right now.*** I want to emphasize this encase you start wondering why it doesn't work when you run it. First of, this program is expecting two things: 
+***This program is under developement and expects a lot from the user right now.*** I want to emphasize this encase you start wondering why it doesn't work when you run it. First of all, this program is expecting two things: 
 - That you have Windows
 - That you FFmpeg in your `PATH`
 
