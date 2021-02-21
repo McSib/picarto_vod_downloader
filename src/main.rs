@@ -25,7 +25,7 @@ fn main() {
         WriteLogger::new(
             LevelFilter::max(),
             config.build(),
-            File::create("e621_downloader.log").unwrap(),
+            File::create("picarto_vod_downloader.log").unwrap(),
         ),
     ])
     .unwrap();
