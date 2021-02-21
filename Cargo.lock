@@ -889,7 +889,7 @@ dependencies = [
 
 [[package]]
 name = "picarto_vod_downloader"
-version = "0.1.0"
+version = "0.8.0"
 dependencies = [
  "clap",
  "indicatif",
