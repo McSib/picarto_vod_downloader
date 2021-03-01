@@ -42,7 +42,7 @@ impl SegmentDownloader {
                     .bytes()
                     .unwrap();
                 debug!("Writing file to \"{}/{}.ts\"", dir, filename);
-                write(format!("{}/{}.ts", dir, filename), file.as_ref()).unwrap();
+                write(format!("{}/{:0>10}.ts", dir, filename), file.as_ref()).unwrap();
 
                 url.path_segments_mut().unwrap().pop();
                 debug!("Popped url segment chunk: {}", url);
