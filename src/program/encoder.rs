@@ -1,5 +1,6 @@
 use mktemp::Temp;
-use std::io::Write;
+use std::fs::{read_dir, write};
+use std::path::Path;
 use std::process::{Command, Stdio};
 
 pub struct Encoder {
@@ -16,35 +17,26 @@ impl Encoder {
     }
 
     pub fn generate_merge_list(&self) {
-        let mut merge_gen = Command::new("PowerShell")
-            .stdin(Stdio::piped())
-            .stdout(Stdio::piped())
-            .spawn()
-            .unwrap();
-        let mut merge_in = merge_gen.stdin.take().unwrap();
-        merge_in
-            .write_all(
-                format!(
-					"$text = foreach ($i in Get-ChildItem ./{}/*.ts) {{ echo \"file \'$i\'\" }}\r\n",
-					self.dir
-				)
-                .as_bytes(),
-            )
-            .unwrap();
-        merge_in
-            .write_all("$utf8 = New-Object System.Text.UTF8Encoding $False\r\n".as_bytes())
-            .unwrap();
-        merge_in
-            .write_all(
-                format!(
-                    "[System.IO.File]::WriteAllLines(\"{}\", $text, $utf8)\r\n",
-                    self.merge_file_name.to_str().unwrap()
-                )
-                .as_bytes(),
-            )
-            .unwrap();
-        merge_in.write_all("exit\r\n".as_bytes()).unwrap();
-        merge_gen.wait_with_output().unwrap();
+        fn get_files(dir: &Path) -> Vec<String> {
+            let mut temp = Vec::new();
+            if dir.is_dir() {
+                for entry in read_dir(dir).unwrap() {
+                    let entry = entry.unwrap();
+                    let path = entry.path();
+                    if path.is_file() {
+                        temp.push(format!("file \'{}\'\r\n", path.as_path().to_str().unwrap()));
+                    }
+                }
+            }
+            temp
+        }
+
+        let mut merge_text = String::new();
+        for lines in get_files(&Path::new(&self.dir)) {
+            merge_text.push_str(&lines);
+        }
+
+        write(self.merge_file_name.as_path(), &merge_text).unwrap();
     }
 
     pub fn encode_video(&self, output_file: &str) {

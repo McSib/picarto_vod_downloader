@@ -1,7 +1,7 @@
 use crate::program::downloader::SegmentDownloader;
 use crate::program::encoder::Encoder;
 use crate::program::m3u8_grabber::{M3U8Grabber, Scrubber};
-use clap::{App, Arg, ArgMatches};
+use clap::{crate_version, App, Arg, ArgMatches};
 use m3u8_grabber::Sender;
 use mktemp::Temp;
 use std::fs::create_dir_all;
@@ -24,10 +24,7 @@ impl Program {
 
     pub fn start() {
         // Start the program and get it initialized.
-        info!("Starting program...");
         let program = Program::new();
-
-        info!("Matching arguments...");
         let args = program.match_commands();
 
         // Get the input url and scrub the data for the m3u8 url;
@@ -60,7 +57,7 @@ impl Program {
 
     fn match_commands(&self) -> ArgMatches {
         App::new("Picarto Stream Downloader")
-            .version("1.0")
+            .version(crate_version!())
             .author("McSib")
             .about("A simple downloader for Picarto vods.")
             .arg(
